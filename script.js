@@ -307,7 +307,7 @@ function joinTelegramTask() {
 // রেফারেল লিংক কপি
 function copyReferral() {
     // দ্রষ্টব্য: 'YOUR_BOT_NAME' এর জায়গায় আপনার আসল বটের ইউজারনেম দিতে হবে
-    const link = `https://t.me/YOUR_BOT_USERNAME_HERE/trees?startapp=${userId}`;
+    const link = `https://t.me/Treesbyboshir_bot/trees?startapp=${userId}`;
     
     // টেলিগ্রামের নিজস্ব ক্লিপবোর্ড মেথড ব্যবহার করা ভালো
     if(tg.readTextFromClipboard) {
