@@ -1,0 +1,129 @@
+:root {
+    --primary: #4CAF50;
+    --primary-dark: #388E3C;
+    --dark-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text: #ffffff;
+    --text-sec: #aaaaaa;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background-color: var(--dark-bg); color: var(--text); overflow: hidden; height: 100vh; position: relative; }
+
+/* Notice Bar */
+.notice-bar { background: linear-gradient(90deg, #ff9800, #ff5722); color: white; padding: 8px; font-size: 13px; font-weight: bold; position: fixed; top: 0; width: 100%; z-index: 50; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+#app-container { padding: 50px 20px 90px 20px; height: 100%; overflow-y: auto; scrollbar-width: none; /* Firefox */ }
+#app-container::-webkit-scrollbar { display: none; /* Chrome, Safari */ }
+
+/* Header */
+header { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; margin-top: 10px; }
+.user-info { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; background: #2a2a2a; padding: 5px 15px; border-radius: 20px; }
+.badge { background: var(--primary); padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+.balance-container { display: flex; align-items: center; gap: 10px; }
+.balance-container h1 { font-size: 32px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+/* Pages Animation */
+.page { display: none; animation: fadeIn 0.3s ease-in-out; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Home (3D Tree) --- */
+.tree-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 45vh; /* উচ্চতা ঠিক করা হয়েছে */
+    margin-bottom: 30px; 
+    perspective: 1000px; /* 3D গভীরতা */
+}
+
+.floating-tree { 
+    width: 260px; /* গাছের সাইজ */
+    height: auto; 
+    object-fit: contain; 
+    cursor: pointer; 
+    /* 3D ছায়া এবং ফিল্টার */
+    filter: drop-shadow(0 15px 15px rgba(0,0,0,0.5)); 
+    /* ভাসমান অ্যানিমেশন */
+    animation: floatTree 3.5s ease-in-out infinite;
+    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-user-drag: none;
+}
+
+/* ট্যাপ করলে একটু দেবে যাবে (Feedback) */
+.floating-tree:active { 
+    transform: scale(0.94) rotateX(5deg); 
+    filter: drop-shadow(0 5px 8px rgba(0,0,0,0.7));
+}
+
+/* ভাসার অ্যানিমেশন কী-ফ্রেম */
+@keyframes floatTree { 
+    0% { transform: translateY(0px); } 
+    50% { transform: translateY(-20px); } /* উপরে উঠবে */
+    100% { transform: translateY(0px); } 
+}
+
+/* Energy Bar */
+.energy-bar-container { background: var(--card-bg); padding: 15px; border-radius: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 1px solid #333; }
+.energy-info { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; font-weight: 600; }
+.progress-bar { height: 12px; background: #333; border-radius: 6px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); transition: width 0.3s ease; box-shadow: 0 0 10px rgba(76, 175, 80, 0.7); }
+
+/* Tasks & Games Cards */
+h2 { margin-bottom: 20px; font-weight: 600; }
+.task-card, .game-card { background: var(--card-bg); border-radius: 16px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; border: 1px solid #333; transition: transform 0.2s; }
+.task-card:hover, .game-card:hover { transform: translateY(-2px); border-color: #444; }
+.icon { font-size: 26px; color: var(--primary); width: 45px; height: 45px; background: #2a2a2a; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+.details, .game-info { flex: 1; }
+h3 { font-size: 16px; margin-bottom: 5px; }
+p, small { font-size: 13px; color: var(--text-sec); }
+.btn-task, .btn-play, .btn-copy, .btn-withdraw { background: linear-gradient(45deg, var(--primary), var(--primary-dark)); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3); transition: opacity 0.2s; }
+.btn-task:active, .btn-play:active { opacity: 0.8; }
+.btn-task:disabled { background: #444; color: #888; box-shadow: none; cursor: not-allowed; }
+
+.special { border: 1px solid #FFD700; background: linear-gradient(45deg, #1e1e1e, #2a2500); }
+.special .icon { color: #FFD700; background: rgba(255, 215, 0, 0.1); }
+.refer-card { background: linear-gradient(45deg, #1e1e1e, #1a2733); border: 1px solid #2196F3; }
+.refer-card .icon { color: #2196F3; background: rgba(33, 150, 243, 0.1); }
+
+/* Game Thumb */
+.game-thumb { width: 45px; height: 45px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
+
+/* Profile */
+.profile-header { text-align: center; margin-bottom: 35px; }
+.avatar { width: 90px; height: 90px; background: #2a2a2a; border-radius: 50%; margin: 0 auto 15px; display: flex; justify-content: center; align-items: center; font-size: 35px; color: var(--primary); border: 3px solid var(--primary); }
+.withdraw-section { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid #333; }
+.withdraw-section h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.input-group { margin-bottom: 20px; text-align: left; }
+.input-group label { display: block; font-size: 13px; margin-bottom: 8px; color: var(--text-sec); font-weight: bold; }
+.input-group input { width: 100%; padding: 14px; background: #121212; border: 1px solid #444; color: white; border-radius: 12px; outline: none; font-size: 16px; transition: border 0.3s; }
+.input-group input:focus { border-color: var(--primary); }
+.btn-withdraw { width: 100%; background: linear-gradient(45deg, #2196F3, #1565C0); box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3); padding: 14px; font-size: 16px; }
+.status-msg { margin-top: 15px; text-align: center; font-size: 14px; color: var(--primary); font-weight: bold; }
+
+/* Bottom Nav */
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px 0 20px 0; border-top: 1px solid #333; z-index: 100; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 15px rgba(0,0,0,0.3); }
+.nav-item { display: flex; flex-direction: column; align-items: center; color: #666; font-size: 11px; cursor: pointer; transition: color 0.2s; flex: 1; }
+.nav-item i { font-size: 22px; margin-bottom: 5px; }
+.nav-item.active { color: var(--primary); }
+
+/* Modal */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+.modal-content { background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #333; }
+.spinner { border: 5px solid #333; border-top: 5px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Tap Animation Text */
+.tap-effect { position: absolute; color: var(--primary); font-weight: 800; font-size: 24px; animation: floatUp 1s ease-out forwards; pointer-events: none; text-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 90; }
+@keyframes floatUp { 
+    0% { opacity: 1; transform: translateY(0) scale(1); } 
+    100% { opacity: 0; transform: translateY(-80px) scale(1.5); } 
+}
+
+/* Responsive Tweaks */
+@media (max-height: 600px) {
+    .tree-container { height: 35vh; }
+    .floating-tree { width: 200px; }
+    #app-container { padding-bottom: 80px; }
+}

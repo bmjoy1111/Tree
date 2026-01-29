@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Trees - Earn Crypto</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src='//libtl.com/sdk.js' data-zone='10518617' data-sdk='show_10518617'></script>
+</head>
+<body>
+
+    <div class="notice-bar">
+        <marquee>🔔 Notice: Please run the app 4 times daily for updates. Withdrawals are processed within 24 hours.</marquee>
+    </div>
+
+    <div id="app-container">
+        
+        <header>
+            <div class="user-info">
+                <span id="username">Loading...</span>
+                <span class="badge">Level 1</span>
+            </div>
+            <div class="balance-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/12970/12970589.png" alt="Coin" width="25">
+                <h1 id="balance">0</h1>
+            </div>
+        </header>
+
+        <section id="home-page" class="page active">
+            <div class="tree-container">
+                <img src="tree.png" alt="3D Tree" id="tap-tree" class="floating-tree">
+            </div>
+            
+            <div class="energy-bar-container">
+                <div class="energy-info">
+                    <span>⚡ Energy</span>
+                    <span id="energy-text">1000/1000</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="energy-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tasks-page" class="page">
+            <h2>Earn Coins</h2>
+            <div class="task-list">
+                
+                <div class="task-card">
+                    <div class="icon"><i class="fas fa-play-circle"></i></div>
+                    <div class="details">
+                        <h3>Watch Video</h3>
+                        <p>+20 Coins (Available: <span id="video-count">15</span>)</p>
+                    </div>
+                    <button class="btn-task" onclick="startVideoTask()">Watch</button>
+                </div>
+
+                <div class="task-card special">
+                    <div class="icon"><i class="fas fa-star"></i></div>
+                    <div class="details">
+                        <h3>Special Task</h3>
+                        <p>+50 Coins (Complete offer)</p>
+                    </div>
+                    <button class="btn-task" onclick="doSpecialTask()">Start</button>
+                </div>
+
+                <div class="task-card">
+                    <div class="icon"><i class="fab fa-telegram"></i></div>
+                    <div class="details">
+                        <h3>Join Channel</h3>
+                        <p>+50 Coins</p>
+                    </div>
+                    <button class="btn-task" id="join-tg-btn" onclick="joinTelegramTask()">Join</button>
+                </div>
+
+                <div class="task-card refer-card">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <div class="details">
+                        <h3>Invite Friends</h3>
+                        <p>+200 Coins per friend</p>
+                        <small>My Ref Count: <span id="ref-count">0</span></small>
+                    </div>
+                    <button class="btn-copy" onclick="copyReferral()">Copy Link</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="games-page" class="page">
+            <h2>Play & Earn</h2>
+            
+            <div class="game-card">
+                <div class="game-thumb" style="background: #4CAF50;">🔢</div>
+                <div class="game-info">
+                    <h3>Number Guess</h3>
+                    <p>Guess the number (1-5)</p>
+                </div>
+                <button class="btn-play" onclick="openGame('number')">Play (+20)</button>
+            </div>
+
+            <div class="game-card">
+                <div class="game-thumb" style="background: #FF9800;">🎨</div>
+                <div class="game-info">
+                    <h3>Color Match</h3>
+                    <p>Type the matching color name</p>
+                </div>
+                <button class="btn-play" onclick="openGame('color')">Play (+20)</button>
+            </div>
+        </section>
+
+        <section id="profile-page" class="page">
+            <div class="profile-header">
+                <div class="avatar"><i class="fas fa-user"></i></div>
+                <h2 id="profile-name">User</h2>
+                <p id="ip-address" style="color: #aaaaaa; font-size: 12px;">IP: Fetching...</p>
+            </div>
+
+            <div class="withdraw-section">
+                <h3><i class="fas fa-wallet"></i> Withdraw</h3>
+                <div class="input-group">
+                    <label>Binance UID</label>
+                    <input type="number" id="binance-uid" placeholder="Enter your Binance UID">
+                </div>
+                <button class="btn-withdraw" onclick="submitWithdraw()">Connect & Request Withdraw</button>
+                <p class="status-msg" id="withdraw-msg"></p>
+            </div>
+        </section>
+
+    </div> <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchPage('home-page', this)">
+            <i class="fas fa-tree"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('tasks-page', this)">
+            <i class="fas fa-tasks"></i>
+            <span>Tasks</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('games-page', this)">
+            <i class="fas fa-gamepad"></i>
+            <span>Games</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('profile-page', this)">
+            <i class="fas fa-user-circle"></i>
+            <span>Profile</span>
+        </div>
+    </nav>
+
+    <div id="loading-modal" class="modal">
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <p id="loading-text">Verifying...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
