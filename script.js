@@ -375,8 +375,8 @@ function submitWithdraw() {
         return;
     }
     
-    if (userData.balance < 1000) { // মিনিমাম উইথড্র লিমিট (উদাহরণস্বরূপ ১০০০)
-         msg.innerText = "❌ Minimum withdraw is 1000 coins.";
+    if (userData.balance < 10000) { // মিনিমাম উইথড্র লিমিট (উদাহরণস্বরূপ ১০০০০)
+         msg.innerText = "❌ Minimum withdraw is 10000 coins.";
          msg.style.color = "orange";
          return;
     }
